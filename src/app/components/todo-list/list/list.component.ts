@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Todo } from 'src/app/shared/interfaces/todo';
+import { chunk } from 'lodash';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-list',
@@ -6,10 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  page = 1;
+  todos: Todo[][];
+  constructor(private http: HttpClient) {}
+  ngOnInit() {
+    this.getRequest();
   }
+  getRequest(){
+    fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(response => response.json())
+    .then(todos => {
+      this.todos = chunk(todos, 10);
+    })
+  };
 
+  to(index: number) {
+    if ( index >= 1 && index <= 20 ) {
+      this.page = index;
+    }
+  }
 }
