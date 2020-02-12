@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateListComponent } from 'src/app/components/todo-list/create-list/create-list.component';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
-
+  addTodo(){
+    //mostrar componente createList, se debe inyectar servicio de ngBootstrap para poder usar los modals (NgbModal), antes se importa en el modulo principal(NgbModule)
+    const modal=this.modalService.open(CreateListComponent);
+    modal.result.then(
+      this.formClose.bind(this),
+      this.formClose.bind(this)
+    )
+  }
+  formClose(){
+    alert('cerrado');
+  } //para que el modal funcione se coloca el entrycomponents en el modulo principal
 }

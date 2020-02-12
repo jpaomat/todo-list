@@ -14,23 +14,13 @@ export class CreateListComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.formComplete=this.formBuilder.group({
-      userId:['', Validators],
-      title:['',Validators.required],
-      description:['',Validators.required],
-      completed:false
-    })
-    /*if(!this.createMode){
-      this.loadAll(this.todo);
-    }*/
+
   }
-  loadAll(todo){
-    this.formComplete.patchValue(todo);
-  }
+
   onSubmit(){
     fetch('https://jsonplaceholder.typicode.com/todos', {
     method: 'POST',
-    body: JSON.stringify(this.modelTodo),
+    body: JSON.stringify(this.todo),
     headers: {
       "Content-type": "application/json; charset=UTF-8"
     }
